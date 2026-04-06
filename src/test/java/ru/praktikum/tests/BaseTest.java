@@ -5,6 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class BaseTest {
 
@@ -12,8 +13,24 @@ public class BaseTest {
 
     @Before
     public void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        String browser = System.getProperty("browser", "chrome");
+
+        if (browser.equals("yandex")) {
+
+            WebDriverManager.chromedriver().setup();
+
+            ChromeOptions options = new ChromeOptions();
+            options.setBinary("C:\\Program Files\\Yandex\\YandexBrowser\\Application\\browser.exe");
+
+            driver = new ChromeDriver(options);
+
+        } else {
+
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        }
+
         driver.manage().window().maximize();
         driver.get("https://stellarburgers.education-services.ru/");
     }
