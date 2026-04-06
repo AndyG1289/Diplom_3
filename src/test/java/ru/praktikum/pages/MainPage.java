@@ -1,5 +1,6 @@
 package ru.praktikum.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -20,27 +21,27 @@ public class MainPage {
     private By saucesTab = By.xpath("//span[text()='Соусы']");
     private By fillingsTab = By.xpath("//span[text()='Начинки']");
 
-    // Методы (действия)
+    @Step("Нажать кнопку Войти в аккаунт")
     public void clickLoginButton() {
         driver.findElement(loginButton).click();
     }
 
+    @Step("Перейти в Личный кабинет")
     public void clickPersonalAccount() {
         driver.findElement(personalAccountButton).click();
     }
 
-    public void clickConstructor() {
-        driver.findElement(constructorButton).click();
-    }
-
+    @Step("Перейти в раздел Булки")
     public void clickBuns() {
         driver.findElement(bunsTab).click();
     }
 
+    @Step("Перейти в раздел Соусы")
     public void clickSauces() {
         driver.findElement(saucesTab).click();
     }
 
+    @Step("Перейти в раздел Начинки")
     public void clickFillings() {
         driver.findElement(fillingsTab).click();
     }
