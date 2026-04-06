@@ -18,20 +18,20 @@ public class ConstructorTest extends BaseTest {
         // потом возвращаемся на булки
         mainPage.clickBuns();
 
-        assertTrue(driver.getPageSource().contains("Булки"));
+        assertTrue(mainPage.isBunsTabActive());
     }
 
     @Test
     public void switchToSaucesTest() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickSauces();
-        assertTrue(driver.getPageSource().contains("Соусы"));
+        assertTrue(mainPage.isSaucesTabActive());
     }
 
     @Test
     public void switchToFillingsTest() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickFillings();
-        assertTrue(driver.getPageSource().contains("Начинки"));
+        assertTrue(mainPage.isFillingsTabActive());
     }
 }
