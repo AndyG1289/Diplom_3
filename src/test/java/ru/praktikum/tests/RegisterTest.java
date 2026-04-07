@@ -31,8 +31,7 @@ public class RegisterTest extends BaseTest {
                 "123456"
         );
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(driver -> driver.getCurrentUrl().contains("login"));
+        loginPage.waitForLoginPage();
 
         System.out.println(driver.getCurrentUrl());
 
