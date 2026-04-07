@@ -6,6 +6,8 @@ import ru.praktikum.pages.MainPage;
 import ru.praktikum.pages.RegisterPage;
 import ru.praktikum.utils.RandomData;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.praktikum.utils.UserApi;
+
 import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
@@ -66,20 +68,15 @@ public class RegisterTest extends BaseTest {
         String email = RandomData.generateEmail();
         String password = "123456";
 
-        // регистрация
+        String accessToken = UserApi.createUser(email, password, "Test User");
+
         MainPage mainPage = new MainPage(driver);
         mainPage.clickLoginButton();
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.clickRegisterLink();
+        loginPage.login(email, password);
 
-        RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.register("Test User", email, password);
-
-        registerPage.clickLoginLink();
-
-        LoginPage loginPageAfterRegister = new LoginPage(driver);
-        loginPageAfterRegister.login(email, password);
+        UserApi.deleteUser(accessToken);
     }
 
     @Test
@@ -88,24 +85,17 @@ public class RegisterTest extends BaseTest {
         String email = RandomData.generateEmail();
         String password = "123456";
 
-        // регистрация
+        String accessToken = UserApi.createUser(email, password, "Test User");
+
         MainPage mainPage = new MainPage(driver);
-        mainPage.clickLoginButton();
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.clickRegisterLink();
-
-        RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.register("Test User", email, password);
-
-        driver.get("https://stellarburgers.education-services.ru/");
-
         mainPage.clickPersonalAccount();
 
-        LoginPage loginPageAfter = new LoginPage(driver);
-        loginPageAfter.login(email, password);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(email, password);
 
         assertTrue(driver.getPageSource().contains("Личный Кабинет"));
+
+        UserApi.deleteUser(accessToken);
     }
 
     @Test
@@ -114,28 +104,20 @@ public class RegisterTest extends BaseTest {
         String email = RandomData.generateEmail();
         String password = "123456";
 
+        String accessToken = UserApi.createUser(email, password, "Test User");
+
         MainPage mainPage = new MainPage(driver);
         mainPage.clickLoginButton();
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.clickRegisterLink();
+        loginPage.clickForgotPassword();
 
-        RegisterPage registerPage = new RegisterPage(driver);
-        registerPage.register("Test User", email, password);
-
-        // возвращаемся на логин
-        registerPage.clickLoginLink();
-
-        // переходим в восстановление пароля
-        LoginPage loginPageAfter = new LoginPage(driver);
-        loginPageAfter.clickForgotPassword();
-
-        // возвращаемся обратно на логин
         driver.get("https://stellarburgers.education-services.ru/login");
 
-        // логинимся
-        loginPageAfter.login(email, password);
+        loginPage.login(email, password);
 
         assertTrue(driver.getPageSource().contains("Личный Кабинет"));
+
+        UserApi.deleteUser(accessToken);
     }
 }
