@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 public class UserApi {
 
-    private static final String BASE_URL = "https://stellarburgers.nomoreparties.site";
+    private static final String BASE_URL = "https://stellarburgers.education-services.ru";
 
     public static String createUser(String email, String password, String name) {
         RestAssured.baseURI = BASE_URL;
