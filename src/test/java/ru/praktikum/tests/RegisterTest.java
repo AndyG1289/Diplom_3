@@ -76,6 +76,8 @@ public class RegisterTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(email, password);
 
+        assertTrue(driver.getPageSource().contains("Личный Кабинет"));
+
         UserApi.deleteUser(accessToken);
     }
 
