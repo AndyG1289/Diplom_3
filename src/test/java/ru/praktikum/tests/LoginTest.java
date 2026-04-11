@@ -1,5 +1,6 @@
 package ru.praktikum.tests;
 
+import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import ru.praktikum.pages.LoginPage;
@@ -11,15 +12,19 @@ import static org.junit.Assert.assertTrue;
 
 public class LoginTest extends BaseTest {
 
+    private String email;
+    private String password;
     private String accessToken;
+
+    @Before
+    public void createUser() {
+        email = RandomData.generateEmail();
+        password = "123456";
+        accessToken = UserApi.createUser(email, password, "Test User");
+    }
 
     @Test
     public void loginFromMainPageTest() {
-
-        String email = RandomData.generateEmail();
-        String password = "123456";
-
-        accessToken = UserApi.createUser(email, password, "Test User");
 
         MainPage mainPage = new MainPage(driver);
         mainPage.clickLoginButton();
@@ -33,11 +38,6 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginFromPersonalAccountTest() {
 
-        String email = RandomData.generateEmail();
-        String password = "123456";
-
-        accessToken = UserApi.createUser(email, password, "Test User");
-
         MainPage mainPage = new MainPage(driver);
         mainPage.clickPersonalAccount();
 
@@ -49,11 +49,6 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void loginFromForgotPasswordTest() {
-
-        String email = RandomData.generateEmail();
-        String password = "123456";
-
-        accessToken = UserApi.createUser(email, password, "Test User");
 
         MainPage mainPage = new MainPage(driver);
         mainPage.clickLoginButton();
