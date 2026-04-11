@@ -14,7 +14,7 @@ public class UserApi {
 
         Response response = given()
                 .header("Content-type", "application/json")
-                .body("{\"email\":\"" + email + "\", \"password\":\"" + password + "\", \"name\":\"" + name + "\"}")
+                .body(new User(email, password, name))
                 .post("/api/auth/register");
 
         return response.then().extract().path("accessToken");
